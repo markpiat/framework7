@@ -1,18 +1,23 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var gls = require('gulp-live-server');
+//var gls = require('gulp-live-server');
+var server = require('gulp-server-livereload');
 
 
-gulp.task('serve', function() {
-
-    //2. serve at custom port
-    var server = gls.static('dist', 8888);
-    server.start();
-
-});
 
 
-gulp.task('default', ['sass', 'sass-watch', 'serve']);
+gulp.task('webserver', function() {
+    gulp.src('dist')
+        .pipe(server({
+            livereload: true,
+            directoryListing: false,
+            defaultFile: 'home.html',
+            open: true
+        }));
+})
+
+
+gulp.task('default', ['sass', 'sass-watch', 'webserver']);
 
 
 gulp.task('sass-watch', function() {
